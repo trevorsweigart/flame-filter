@@ -18,4 +18,8 @@ data = np.array(img, dtype=float)
 # Convert image to grayscale
 if len(data.shape) == 3:
     data = data.mean(axis=2)
-plot(data, "Grayscale Image')
+plot(data, 'Grayscale Image')
+
+# Apply Gaussian smoothing for denoising
+smoothed = ndimage.gaussian_filter(data, 3)
+plot(smoothed, 'Smoothed Image')
