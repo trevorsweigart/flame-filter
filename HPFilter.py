@@ -42,4 +42,4 @@ plot(flame_highlighted, 'Flame Highlighted')
 
 plt.tight_layout()
 plt.show()
-plt.savefig('filter.png')
+plt.savefig('result.png')
