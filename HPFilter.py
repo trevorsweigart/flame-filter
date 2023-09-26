@@ -32,3 +32,10 @@ kernel = np.array([[-1, -1, -1],
                    [-1, -1, -1]])
 highpass = ndimage.convolve(smoothed, kernel)
 plot(highpass, 'Highpass Filter')
+
+# Binary mask to completely filter out background
+# Threshold values may need adjusted
+threshold = np.mean(highpass) * 1.5 # Adjustable weight to show flame
+flame_highlighted = data.copy()
+flame_highlighted[highpass <= threshold] = 0
+plot(flame_highlighted, 'Flame Highlighted')
