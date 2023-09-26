@@ -23,3 +23,12 @@ plot(data, 'Grayscale Image')
 # Apply Gaussian smoothing for denoising
 smoothed = ndimage.gaussian_filter(data, 3)
 plot(smoothed, 'Smoothed Image')
+
+# Apply highpass filter
+# Middle value is higher for more contrast, where flame should be
+# Kernel values may need adjusted
+kernel = np.array([[-1, -1, -1],
+                   [-1,  9, -1],
+                   [-1, -1, -1]])
+highpass = ndimage.convolve(smoothed, kernel)
+plot(highpass, 'Highpass Filter')
