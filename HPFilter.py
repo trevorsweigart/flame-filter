@@ -39,3 +39,7 @@ threshold = np.mean(highpass) * 1.5 # Adjustable weight to show flame
 flame_highlighted = data.copy()
 flame_highlighted[highpass <= threshold] = 0
 plot(flame_highlighted, 'Flame Highlighted')
+
+plt.tight_layout()
+plt.show()
+plt.savefig('filter.png')
