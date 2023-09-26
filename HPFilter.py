@@ -14,3 +14,8 @@ plot.i = 0
 # Loading data
 img = Image.open('testImage1.png')
 data = np.array(img, dtype=float)
+
+# Convert image to grayscale
+if len(data.shape) == 3:
+    data = data.mean(axis=2)
+plot(data, "Grayscale Image')
