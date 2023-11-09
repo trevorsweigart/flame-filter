@@ -1,7 +1,9 @@
-import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 from scipy import ndimage
 from PIL import Image
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 def plot(data, title):
     plot.i += 1
@@ -12,7 +14,7 @@ def plot(data, title):
 plot.i = 0
 
 # Loading data
-img = Image.open('testImage1.png')
+img = Image.open('Image2.jpg')
 data = np.array(img, dtype=float)
 
 # Convert image to grayscale
@@ -35,11 +37,11 @@ plot(highpass, 'Highpass Filter')
 
 # Binary mask to completely filter out background
 # Threshold values may need adjusted
-threshold = np.mean(highpass) * 1.5 # Adjustable weight to show flame
+threshold = np.mean(highpass) * 1.7 # Adjustable weight to show flame
 flame_highlighted = data.copy()
 flame_highlighted[highpass <= threshold] = 0
 plot(flame_highlighted, 'Flame Highlighted')
 
 plt.tight_layout()
 plt.show()
-plt.savefig('result.png')
+plt.savefig('result.jpg')
