@@ -1,3 +1,4 @@
+import os
 import matplotlib
 import numpy as np
 from scipy import ndimage
@@ -56,20 +57,26 @@ flame_area = np.sum(flame_highlighted > 0)
 # Minimum acceptable area
 min_area = 500  # Adjustable threshold
 
+flame_big_enough = False
+
 # Check if heat source is big enough
 if flame_area >= min_area:
     print(f"Flame is big enough with area: {flame_area}")
     flame_big_enough = True
 else:
     print(f"Flame is too small with area: {flame_area}")
-    flame_big_enough = False
 
 # Check if the centroid is centered
+flame_centered = False
 distance_to_center = np.linalg.norm(np.array(centroid) - image_center)
 if distance_to_center < 0.2 * min(flame_highlighted.shape):
     print("Flame is centered.")
+    flame_centered = True
 else:
     print("Flame is not centered.")
+
+if(flame_big_enough and flame_centered):
+    os.system('python3 retract.py')
 
 plt.savefig('filtered_image.jpg', bbox_inches='tight', pad_inches=0)
 
