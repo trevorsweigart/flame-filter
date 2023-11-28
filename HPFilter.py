@@ -51,7 +51,20 @@ plt.imshow(flame_highlighted, cmap='gray')
 plt.scatter(centroid[1], centroid[0], c='red', marker='x', s=100, label='Centroid')
 plt.title('Flame Highlighted with Centroid')
 
-# Check if the centroid is relatively centered
+flame_area = np.sum(flame_highlighted > 0)
+
+# Minimum acceptable area
+min_area = 500  # Adjustable threshold
+
+# Check if heat source is big enough
+if flame_area >= min_area:
+    print(f"Flame is big enough with area: {flame_area}")
+    flame_big_enough = True
+else:
+    print(f"Flame is too small with area: {flame_area}")
+    flame_big_enough = False
+
+# Check if the centroid is centered
 image_center = np.array(flame_highlighted.shape) / 2
 distance_to_center = np.linalg.norm(np.array(centroid) - image_center)
 if distance_to_center < 0.2 * min(flame_highlighted.shape):
