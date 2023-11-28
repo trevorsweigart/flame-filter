@@ -1,9 +1,11 @@
 import matplotlib
 import numpy as np
 from scipy import ndimage
+from scipy.ndimage import center_of_mass, convolve, gaussian_filter
 from PIL import Image
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 def plot(data, title):
     plot.i += 1
@@ -43,12 +45,19 @@ flame_highlighted[highpass <= threshold] = 0
 plot(flame_highlighted, 'Flame Highlighted')
 
 # Calculate the centroid of the binary mask
-centroid = ndimage.measurements.center_of_mass(flame_highlighted)
+centroid = center_of_mass(flame_highlighted)
+image_center = np.array(flame_highlighted.shape) / 2
 
 # Display the centroid as a red dot on the final image
 plt.subplot(3, 2, 6)
 plt.imshow(flame_highlighted, cmap='gray')
 plt.scatter(centroid[1], centroid[0], c='red', marker='x', s=100, label='Centroid')
+
+# Draw the acceptable centered area
+center_acceptance_radius = 0.2 * min(flame_highlighted.shape)
+acceptable_center_area = patches.Circle(image_center[::-1], center_acceptance_radius, color='blue', fill=False, linestyle='--', linewidth=1.5, label='Acceptable Center Area')
+plt.gca().add_patch(acceptable_center_area)
+
 plt.title('Flame Highlighted with Centroid')
 
 flame_area = np.sum(flame_highlighted > 0)
@@ -65,7 +74,6 @@ else:
     flame_big_enough = False
 
 # Check if the centroid is centered
-image_center = np.array(flame_highlighted.shape) / 2
 distance_to_center = np.linalg.norm(np.array(centroid) - image_center)
 if distance_to_center < 0.2 * min(flame_highlighted.shape):
     print("Flame is centered.")
@@ -73,7 +81,6 @@ else:
     print("Flame is not centered.")
 
 plt.tight_layout()
-plt.show()
 plt.savefig('result.jpg')
 
 
