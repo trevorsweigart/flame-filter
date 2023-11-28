@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Loading data
-img = Image.open('Image3.jpg')
+img = Image.open('Image1.jpg')
 data = np.array(img, dtype=float)
 
 # Convert image to grayscale
