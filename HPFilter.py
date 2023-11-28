@@ -48,6 +48,7 @@ acceptable_center_area = patches.Circle(image_center[::-1], center_acceptance_ra
 ax.add_patch(acceptable_center_area)
 
 ax.set_title('Masked flame with centroid and centering acceptance')
+ax.legend()
 ax.axis('off')
 
 flame_area = np.sum(flame_highlighted > 0)
