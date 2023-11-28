@@ -14,7 +14,7 @@ def plot(data, title):
 plot.i = 0
 
 # Loading data
-img = Image.open('Image2.jpg')
+img = Image.open('Image3.jpg')
 data = np.array(img, dtype=float)
 
 # Convert image to grayscale
@@ -42,6 +42,24 @@ flame_highlighted = data.copy()
 flame_highlighted[highpass <= threshold] = 0
 plot(flame_highlighted, 'Flame Highlighted')
 
+# Calculate the centroid of the binary mask
+centroid = ndimage.measurements.center_of_mass(flame_highlighted)
+
+# Display the centroid as a red dot on the final image
+plt.subplot(3, 2, 6)
+plt.imshow(flame_highlighted, cmap='gray')
+plt.scatter(centroid[1], centroid[0], c='red', marker='x', s=100, label='Centroid')
+plt.title('Flame Highlighted with Centroid')
+
 plt.tight_layout()
 plt.show()
 plt.savefig('result.jpg')
+
+# Check if the centroid is relatively centered
+image_center = np.array(flame_highlighted.shape) / 2
+distance_to_center = np.linalg.norm(np.array(centroid) - image_center)
+if distance_to_center < 0.2 * min(flame_highlighted.shape):
+    print("Flame is centered.")
+else:
+    print("Flame is not centered.")
+
