@@ -51,10 +51,6 @@ plt.imshow(flame_highlighted, cmap='gray')
 plt.scatter(centroid[1], centroid[0], c='red', marker='x', s=100, label='Centroid')
 plt.title('Flame Highlighted with Centroid')
 
-plt.tight_layout()
-plt.show()
-plt.savefig('result.jpg')
-
 # Check if the centroid is relatively centered
 image_center = np.array(flame_highlighted.shape) / 2
 distance_to_center = np.linalg.norm(np.array(centroid) - image_center)
@@ -62,4 +58,9 @@ if distance_to_center < 0.2 * min(flame_highlighted.shape):
     print("Flame is centered.")
 else:
     print("Flame is not centered.")
+
+plt.tight_layout()
+plt.show()
+plt.savefig('result.jpg')
+
 
